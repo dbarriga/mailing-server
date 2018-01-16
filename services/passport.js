@@ -40,7 +40,8 @@ passport.use(
     {
       clientID: keys.outlookApplicationId,
       clientSecret: keys.outlookPassword,
-      callbackURL: '/auth/outlook/callback'
+      callbackURL: '/auth/outlook/callback',
+      proxy: true
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile);
