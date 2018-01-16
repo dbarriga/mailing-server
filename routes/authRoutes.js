@@ -1,6 +1,6 @@
 const passport = require('passport');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
@@ -14,6 +14,20 @@ module.exports = (app) => {
     req.logout();
     res.send(req.user);
   });
+
+  app.get(
+    '/auth/outlook',
+    passport.authenticate('windowslive', {
+      scope: [
+        'openid',
+        'profile',
+        'offline_access',
+        'https://outlook.office.com/Mail.Read'
+      ]
+    })
+  );
+
+  app.get('/auth/outlook/callback', passport.authenticate('windowslive'));
 
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
