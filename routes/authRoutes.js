@@ -8,7 +8,13 @@ module.exports = app => {
     })
   );
 
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback', 
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     req.logout();
@@ -27,7 +33,13 @@ module.exports = app => {
     })
   );
 
-  app.get('/auth/outlook/callback', passport.authenticate('windowslive'));
+  app.get(
+    '/auth/outlook/callback',
+    passport.authenticate('windowslive', { failureRedirect: '/' }),
+    (req, res) => {
+      res.redirect('/surveys')
+    }
+  );
 
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
